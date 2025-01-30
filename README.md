@@ -1,4 +1,4 @@
-# df-tps
+# df-tpstracker
 
 A dragonfly library to track the TPS (ticks per second) of a world.
 
