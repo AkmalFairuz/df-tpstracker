@@ -3,6 +3,7 @@ package tpstracker
 import (
 	"fmt"
 	"github.com/df-mc/dragonfly/server/world"
+	"log"
 	"sync"
 	"time"
 )
@@ -77,6 +78,12 @@ func (t *TPSTracker) PrintTPS() {
 // Close ...
 func (t *TPSTracker) Close() error {
 	t.once.Do(func() {
+		defer func() {
+			if r := recover(); r != nil {
+				log.Fatalf("handled panic while closing tps tracker: %v", r)
+			}
+		}()
+
 		close(t.closing)
 		t.wg.Wait()
 		t.w = nil
